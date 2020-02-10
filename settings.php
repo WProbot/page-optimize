@@ -180,7 +180,12 @@ function page_optimize_settings_init() {
 add_action( 'admin_init', 'page_optimize_settings_init' );
 
 function page_optimize_add_plugin_settings_link( $plugin_action_links, $plugin_file = null ) {
-	if ( 'page-optimize/page-optimize.php' !== $plugin_file ) {
+	static $our_plugin_basename;
+	if ( empty( $our_plugin_basename ) ) {
+		$our_plugin_basename = plugin_basename( __DIR__ . '/page-optimize.php' );
+	}
+
+	if ( $our_plugin_basename !== $plugin_file ) {
 		return $plugin_action_links;
 	}
 	if ( ! current_user_can( 'manage_options' ) ) {
